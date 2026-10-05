@@ -1,14 +1,12 @@
-using System.Collections.Generic;
-
-namespace BuffableFloat
+namespace Buffables
 {
-    public class FloatBuff
+    public struct FloatBuff
     {
         public readonly string name;
         public readonly float value;
-        public readonly FloatBuffType buffType;
+        public readonly EFloatBuffType buffType;
 
-        public FloatBuff(string name, float value, FloatBuffType buffType)
+        public FloatBuff(string name, float value, EFloatBuffType buffType)
         {
             this.name = name;
             this.value = value;
@@ -19,26 +17,21 @@ namespace BuffableFloat
         {
             switch (buffType)
             {
-                case FloatBuffType.Add:
+                case EFloatBuffType.Add:
                     buffedValue = buffedValue + value;
                     break;
-                case FloatBuffType.Subtract:
+                case EFloatBuffType.Subtract:
                     buffedValue = buffedValue - value;
                     break;
-                case FloatBuffType.Multiply:
+                case EFloatBuffType.Multiply:
                     buffedValue = buffedValue * value;
                     break;
-                case FloatBuffType.Divide:
+                case EFloatBuffType.Divide:
                     buffedValue = buffedValue / value;
                     break;
             }
             return buffedValue;
         }
-    }
-
-    public enum FloatBuffType
-    {
-        None, Add, Subtract, Multiply, Divide
     }
 }
 

@@ -1,11 +1,15 @@
+using System;
 using System.Collections.Generic;
 
-namespace BuffableFloat
+namespace Buffables
 {
+    [Serializable]
     public class BuffableFloat
     {
-        private float value;
-        private List<FloatBuff> buffs;
+        private readonly float value;
+        private List<FloatBuff> buffs = new();
+        public Action<FloatBuff> onBuffAdded;
+        public Action<FloatBuff> onBuffRemoved;
 
         public float Value
         {
@@ -31,6 +35,25 @@ namespace BuffableFloat
         public void AddBuff(FloatBuff buff)
         {
             buffs.Add(buff);
+            onBuffAdded?.Invoke(buff);
+        }
+
+        public void RemoveBuff(FloatBuff buff)
+        {
+           buffs.Remove(buff);
+           onBuffRemoved?.Invoke(buff);
+        }
+
+        public void RemoveBuffByName(string name)
+        {
+            foreach (FloatBuff buff in buffs)
+            {
+                if(buff.name == name)
+                {
+                    buffs.Remove(buff);
+                    onBuffRemoved?.Invoke(buff);
+                }
+            }
         }
     }
 }
