@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using System;
 using Buffables;
 using Damage;
@@ -12,11 +13,11 @@ namespace Health
         [SerializeField]
         private float currentHealth;
 
-        public DamageReductionStrategy damageReductionStrategy;
+        public List<DamageReductionStrategy> damageReductionStrategies = new();
 
-        public Action<float, float> OnHealthChanged;
-        public Action<float, int> OnHealthDisplay;
-        public Action OnDeath;
+        public event Action<float, float> OnHealthChanged;
+        public event Action<float, int> OnDamageDisplay;
+        public event Action OnDeath;
         
         public float CurrentHealth
         {
@@ -40,17 +41,22 @@ namespace Health
         }
 
         /// <summary>
-        /// Apply Damage function which should be called when attempting to change the health by a certain damage amount of a certain damage type. Calls the "ApplyDamageReduction function, which can handle damage reduction on child classes."
+        /// Apply Damage function which should be called when attempting to change the health by a certain damage amount of a certain damage type. Calls the "ApplyDamageReduction" function in the DamageReductionStrategy, which can handle damage reduction.
         /// </summary>
         public float ApplyDamage(DamageInstance damage)
         {
             float totalDamage = 0;
             foreach(DamageEntry damageEntry in damage.damageEntries)
             {
-                totalDamage += damageReductionStrategy.ApplyDamageReduction(damageEntry);
+                float damageMultiplierRatio = 1;
+                foreach (DamageReductionStrategy damageReductionStrategy in damageReductionStrategies)
+                {
+                    damageMultiplierRatio *= damageReductionStrategy.ApplyDamageReduction(damageEntry);
+                }
+                totalDamage += damageEntry.damage.Value * damageMultiplierRatio;
             }
             CurrentHealth -= totalDamage;
-            OnHealthDisplay?.Invoke(totalDamage, damage.criticalTier);
+            OnDamageDisplay?.Invoke(totalDamage, damage.criticalTier);
             return totalDamage;
         }
     }
