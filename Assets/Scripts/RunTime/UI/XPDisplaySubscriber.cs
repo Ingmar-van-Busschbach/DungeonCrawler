@@ -1,4 +1,4 @@
-using Damage;
+ using Damage;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,7 +45,7 @@ public class XPDisplaySubscriber : MonoBehaviour
     private void Init(int currentXP, int maxXP, int currentLevel)
     {
         xpBarImage.fillAmount = ((float)currentXP / maxXP);
-        levelText.text = currentLevel.ToString();
+        levelText.text = (currentLevel + 1).ToString();
     }
 
     private void OnPlayerSpawned(GameObject player)

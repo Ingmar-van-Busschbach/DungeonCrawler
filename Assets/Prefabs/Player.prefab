@@ -181,3 +181,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::XP.XPContainer
   xpNeededPerLevelUp: 050000000f00000019000000i
+  currentXP: 0
+  currentLevel: 0

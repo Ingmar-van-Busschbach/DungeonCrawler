@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
-using System.ComponentModel;
 
 public class DungeonWrapper : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class DungeonWrapper : MonoBehaviour
     public event Action onSpawnRoomSelector;
     public event Action onPlayerSpawner;
     public event Action onNavMeshGenerator;
+    public event Action<float> onCompletionChanged;
 
     private ProceduralGenerator[] proceduralGenerators;
 
@@ -103,6 +105,7 @@ public class DungeonWrapper : MonoBehaviour
 
     public IEnumerator ChangeDungeonStatus(DungeonStatus dungeonStatus)
     {
+        int count = (int)DungeonStatus.DungeonGenerationComplete;
         this.dungeonStatus = dungeonStatus;
         if (executionDelayType == ExecutionDelayType.ManualBetweenSteps && dungeonStatus != DungeonStatus.DungeonGenerationComplete)
         {
@@ -113,43 +116,54 @@ public class DungeonWrapper : MonoBehaviour
         {
             case DungeonStatus.RoomsCompleted:
                 onDoorGenerator?.Invoke();
+                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 break;
             case DungeonStatus.DoorsCompleted:
+                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onRoomReducer?.Invoke();
                 break;
             case DungeonStatus.RoomsReduced:
+                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onCycleReducer?.Invoke();
                 break;
             case DungeonStatus.CyclesReduced:
+                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onReducedDrawer?.Invoke();
                 break;
             case DungeonStatus.RoomsDrawn:
+                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onTileMapGenerator?.Invoke();
                 break;
             case DungeonStatus.TileMapGenerated:
+                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onMarchingSquareSpawner?.Invoke();
                 break;
             case DungeonStatus.WallsSpawned:
+                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onFloodFillSpawner?.Invoke();
                 break;
             case DungeonStatus.FloorSpawned:
+                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onNavMeshGenerator?.Invoke();
                 break;
             case DungeonStatus.NavMeshGenerated:
+                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onSpawnRoomSelector?.Invoke();
                 break;
             case DungeonStatus.SpawnRoomSelected:
+                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onPlayerSpawner?.Invoke();
                 break;
             case DungeonStatus.PlayerSpawned:
+                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 StartCoroutine(ChangeDungeonStatus(DungeonStatus.DungeonGenerationComplete));
                 break;
             case DungeonStatus.DungeonGenerationComplete:
-                Debug.Log("Dungeon generation complete");
+                onCompletionChanged?.Invoke((float)dungeonStatus / count);                   
                 break;
         }
     }
 
-    public enum DungeonStatus { Empty, RoomsCompleted, DoorsCompleted, RoomsReduced, CyclesReduced, RoomsDrawn, TileMapGenerated, WallsSpawned, FloorSpawned, NavMeshGenerated, SpawnRoomSelected, PlayerSpawned, DungeonGenerationComplete }
+    public enum DungeonStatus { Empty = 0, RoomsCompleted, DoorsCompleted, RoomsReduced, CyclesReduced, RoomsDrawn, TileMapGenerated, WallsSpawned, FloorSpawned, NavMeshGenerated, SpawnRoomSelected, PlayerSpawned, DungeonGenerationComplete}
     public enum ExecutionDelayType { None, ManualBetweenSteps, Automatic }
 }
