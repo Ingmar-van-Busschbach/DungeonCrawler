@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Buffables
 {
     [Serializable]
     public class BuffableFloat
     {
-        private readonly float value;
-        private List<FloatBuff> buffs = new();
+        [SerializeField] private float value;
+        [SerializeField] private List<FloatBuff> buffs = new();
         public Action<FloatBuff> onBuffAdded;
         public Action<FloatBuff> onBuffRemoved;
 

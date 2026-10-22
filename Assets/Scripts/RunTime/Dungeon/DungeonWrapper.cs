@@ -15,12 +15,12 @@ public class DungeonWrapper : MonoBehaviour
     [Tooltip("The time delay between generating as part of the algorithm, in seconds. This is a global variable overriding the individual algorithms.")]
     [Range(0, 0.1f)][SerializeField] private float globalExecutionDelay = 0.01f;
 
-    
-    public List<RoomWrapper> rooms = new();
-    public List<RoomWrapper> reducedRooms = new();
-    public List<DoorWrapper> doors = new();
-    public List<DoorWrapper> reducedDoors = new();
-    public bool[,] tileMap;
+
+    [NonSerialized] public List<RoomWrapper> rooms = new();
+    [NonSerialized] public List<RoomWrapper> reducedRooms = new();
+    [NonSerialized] public List<DoorWrapper> doors = new();
+    [NonSerialized] public List<DoorWrapper> reducedDoors = new();
+    [NonSerialized] public bool[,] tileMap;
     public DungeonStatus dungeonStatus = DungeonStatus.Empty;
 
     private RoomGenerator roomGenerator;

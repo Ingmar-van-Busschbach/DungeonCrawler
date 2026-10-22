@@ -1,6 +1,4 @@
-using Damage;
-
-namespace Health
+namespace Damage
 {
     public interface IDamageAble
     {

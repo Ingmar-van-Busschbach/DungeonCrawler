@@ -1,5 +1,8 @@
+using System;
+
 namespace Buffables
 {
+    [Serializable]
     public struct FloatBuff
     {
         public readonly string name;

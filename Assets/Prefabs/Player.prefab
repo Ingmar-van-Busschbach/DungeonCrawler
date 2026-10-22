@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 5421413294564991734}
   - component: {fileID: 1740937371372134799}
   - component: {fileID: 1302021145889227315}
+  - component: {fileID: 1817398240180106892}
+  - component: {fileID: 181159362882017248}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -64,10 +66,12 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a59a8014602994047b0b434b9457f320, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,9 +89,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &5421413294564991734
 CapsuleCollider:
@@ -146,3 +152,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4f35bec042ba3e48a070de61f496a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1817398240180106892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668811300614004894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5228cfe31334c8d449262b64adf39e85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Damage.HealthContainer
+  maxHealth:
+    value: 10
+    buffs: []
+  damageReductionStrategies: []
+--- !u!114 &181159362882017248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668811300614004894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84bd749fcfd324d4da0ff957db5b1aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::XP.XPContainer
+  xpNeededPerLevelUp: 050000000f00000019000000i

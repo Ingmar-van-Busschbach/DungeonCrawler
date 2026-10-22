@@ -2,15 +2,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using Buffables;
-using Damage;
 
-namespace Health
+namespace Damage
 {
-    public class Health : MonoBehaviour, IDamageAble
+    public class HealthContainer : MonoBehaviour, IDamageAble
     {
         [SerializeField]
         private BuffableFloat maxHealth;
-        [SerializeField]
         private float currentHealth;
 
         public List<DamageReductionStrategy> damageReductionStrategies = new();
@@ -21,6 +19,10 @@ namespace Health
         
         public float CurrentHealth
         {
+            get
+            {
+                return currentHealth;
+            }
             set
             {
                 currentHealth = value;
@@ -32,12 +34,23 @@ namespace Health
                 {
                     currentHealth = maxHealth.Value;
                 }
-                OnHealthChanged?.Invoke(currentHealth, value);
+                OnHealthChanged?.Invoke(currentHealth, MaxHealth);
             }
+        }
+
+        public float MaxHealth
+        {
             get
             {
-                return currentHealth;
+                return maxHealth.Value;
             }
+            private set { }
+        }
+
+        public void Start()
+        {
+            currentHealth = MaxHealth;
+            OnHealthChanged?.Invoke(currentHealth, MaxHealth);
         }
 
         /// <summary>
