@@ -15,9 +15,7 @@ public class MouseClickController : MonoBehaviour
             if (Physics.Raycast(mouseRay, out RaycastHit hitInfo))
             {
                 clickPosition = hitInfo.point;
-                Debug.Log(clickPosition);
 
-                // TODO EXERCISE 5: Trigger a Unity event to notify other scripts about the click here
                 onClickEvent?.Invoke(clickPosition);
             }
         }

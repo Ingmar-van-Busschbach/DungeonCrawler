@@ -20,8 +20,8 @@ public class SpawnRoomSelector : ProceduralGenerator
     private void SelectRooms()
     {
         float length = 0;
-        dungeonWrapper.playerSpawnRoom = dungeonWrapper.reducedRooms[0];
-        dungeonWrapper.bossSpawnRoom = dungeonWrapper.reducedRooms[1];
+        dungeonWrapper.playerSpawnRoomIndex = 0;
+        dungeonWrapper.bossSpawnRoomIndex = 1;
         for (int i = 0; i < dungeonWrapper.reducedRooms.Count; i++)
         {
             for (int j = i + 1; j < dungeonWrapper.reducedRooms.Count; j++)
@@ -36,8 +36,8 @@ public class SpawnRoomSelector : ProceduralGenerator
                     {
                         Debug.Log("New spawn rooms found: Distance of " + distance);
                         length = distance;
-                        dungeonWrapper.playerSpawnRoom = dungeonWrapper.reducedRooms[i];
-                        dungeonWrapper.bossSpawnRoom = dungeonWrapper.reducedRooms[j];
+                        dungeonWrapper.playerSpawnRoomIndex = i;
+                        dungeonWrapper.bossSpawnRoomIndex = j;
                     }
                 }
                 else

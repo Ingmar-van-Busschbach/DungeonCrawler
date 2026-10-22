@@ -134,22 +134,22 @@ public class RoomGenerator : ProceduralGenerator
         //Randomly select whether to attempt to horizontally or vertically split first, then attempt splitting that way if the room is large enough.
         if (numberGenerator.NextDouble() < splitDirectionBias)
         {
-            if (currentRoom.room.width >= roomMinSize.x * 2)
+            if (currentRoom.room.width >= roomMinSize.x * 2 + 1)
             {
                 yield return StartCoroutine(SplitHorizontally(currentRoom));
             }
-            else
+            else if (currentRoom.room.height >= roomMinSize.y * 2 + 1)
             {
                 yield return StartCoroutine(SplitVertically(currentRoom));
             }
         }
         else
         {
-            if (currentRoom.room.height >= roomMinSize.y * 2)
+            if (currentRoom.room.height >= roomMinSize.y * 2 + 1)
             {
                 yield return StartCoroutine(SplitVertically(currentRoom));
             }
-            else
+            else if (currentRoom.room.width >= roomMinSize.x * 2 + 1)
             {
                 yield return StartCoroutine(SplitHorizontally(currentRoom));
             }

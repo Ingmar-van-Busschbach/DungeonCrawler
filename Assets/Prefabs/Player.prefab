@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1302021145889227315}
   - component: {fileID: 1817398240180106892}
   - component: {fileID: 181159362882017248}
+  - component: {fileID: 6249778102615991496}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -183,3 +184,15 @@ MonoBehaviour:
   xpNeededPerLevelUp: 050000000f00000019000000i
   currentXP: 0
   currentLevel: 0
+--- !u!114 &6249778102615991496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668811300614004894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2678bc0b11f6b7d4a97995dc58bd0cfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCameraSwitcher

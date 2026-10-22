@@ -21,8 +21,8 @@ public class DungeonWrapper : MonoBehaviour
     [NonSerialized] public List<RoomWrapper> reducedRooms = new();
     [NonSerialized] public List<DoorWrapper> doors = new();
     [NonSerialized] public List<DoorWrapper> reducedDoors = new();
-    [NonSerialized] public RoomWrapper playerSpawnRoom;
-    [NonSerialized] public RoomWrapper bossSpawnRoom;
+    [NonSerialized] public int playerSpawnRoomIndex;
+    [NonSerialized] public int bossSpawnRoomIndex;
     [NonSerialized] public bool[,] tileMap;
     public DungeonStatus dungeonStatus = DungeonStatus.Empty;
 
@@ -34,6 +34,7 @@ public class DungeonWrapper : MonoBehaviour
     public event Action onTileMapGenerator;
     public event Action onMarchingSquareSpawner;
     public event Action onFloodFillSpawner;
+    public event Action onCameraSpawner;
     public event Action onSpawnRoomSelector;
     public event Action onPlayerSpawner;
     public event Action onNavMeshGenerator;
@@ -106,6 +107,7 @@ public class DungeonWrapper : MonoBehaviour
     public IEnumerator ChangeDungeonStatus(DungeonStatus dungeonStatus)
     {
         int count = (int)DungeonStatus.DungeonGenerationComplete;
+        onCompletionChanged?.Invoke((float)dungeonStatus / count);
         this.dungeonStatus = dungeonStatus;
         if (executionDelayType == ExecutionDelayType.ManualBetweenSteps && dungeonStatus != DungeonStatus.DungeonGenerationComplete)
         {
@@ -116,54 +118,45 @@ public class DungeonWrapper : MonoBehaviour
         {
             case DungeonStatus.RoomsCompleted:
                 onDoorGenerator?.Invoke();
-                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 break;
             case DungeonStatus.DoorsCompleted:
-                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onRoomReducer?.Invoke();
                 break;
             case DungeonStatus.RoomsReduced:
-                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onCycleReducer?.Invoke();
                 break;
             case DungeonStatus.CyclesReduced:
-                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onReducedDrawer?.Invoke();
                 break;
             case DungeonStatus.RoomsDrawn:
-                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onTileMapGenerator?.Invoke();
                 break;
             case DungeonStatus.TileMapGenerated:
-                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onMarchingSquareSpawner?.Invoke();
                 break;
             case DungeonStatus.WallsSpawned:
-                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onFloodFillSpawner?.Invoke();
                 break;
             case DungeonStatus.FloorSpawned:
-                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onNavMeshGenerator?.Invoke();
                 break;
             case DungeonStatus.NavMeshGenerated:
-                onCompletionChanged?.Invoke((float)dungeonStatus / count);
+                onCameraSpawner?.Invoke();
+                break;
+            case DungeonStatus.CamerasSpawned:
                 onSpawnRoomSelector?.Invoke();
                 break;
             case DungeonStatus.SpawnRoomSelected:
-                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 onPlayerSpawner?.Invoke();
                 break;
             case DungeonStatus.PlayerSpawned:
-                onCompletionChanged?.Invoke((float)dungeonStatus / count);
                 StartCoroutine(ChangeDungeonStatus(DungeonStatus.DungeonGenerationComplete));
                 break;
-            case DungeonStatus.DungeonGenerationComplete:
-                onCompletionChanged?.Invoke((float)dungeonStatus / count);                   
+            case DungeonStatus.DungeonGenerationComplete:                
                 break;
         }
     }
 
-    public enum DungeonStatus { Empty = 0, RoomsCompleted, DoorsCompleted, RoomsReduced, CyclesReduced, RoomsDrawn, TileMapGenerated, WallsSpawned, FloorSpawned, NavMeshGenerated, SpawnRoomSelected, PlayerSpawned, DungeonGenerationComplete}
+    public enum DungeonStatus { Empty = 0, RoomsCompleted, DoorsCompleted, RoomsReduced, CyclesReduced, RoomsDrawn, TileMapGenerated, WallsSpawned, FloorSpawned, NavMeshGenerated, CamerasSpawned, SpawnRoomSelected, PlayerSpawned, DungeonGenerationComplete}
     public enum ExecutionDelayType { None, ManualBetweenSteps, Automatic }
 }
