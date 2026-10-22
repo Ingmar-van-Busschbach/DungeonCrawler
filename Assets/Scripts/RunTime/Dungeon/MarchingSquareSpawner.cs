@@ -12,9 +12,15 @@ public class MarchingSquareSpawner : ProceduralGenerator
 
     private GameObject parent;
 
-    private void Start()
+    private void OnEnable()
     {
         dungeonWrapper = GetComponent<DungeonWrapper>();
+        dungeonWrapper.onMarchingSquareSpawner += StartGeneration;
+    }
+
+    private void OnDisable()
+    {
+        dungeonWrapper.onMarchingSquareSpawner -= StartGeneration;
     }
 
     public void StartGeneration()

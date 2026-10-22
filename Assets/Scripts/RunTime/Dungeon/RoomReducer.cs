@@ -19,9 +19,15 @@ public class RoomReducer : ProceduralGenerator
     private DungeonWrapper dungeonWrapper;
 
 
-    private void Start()
+    private void OnEnable()
     {
         dungeonWrapper = GetComponent<DungeonWrapper>();
+        dungeonWrapper.onRoomReducer += StartGeneration;
+    }
+
+    private void OnDisable()
+    {
+        dungeonWrapper.onRoomReducer -= StartGeneration;
     }
 
     public void StartGeneration()

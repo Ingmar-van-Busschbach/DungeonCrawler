@@ -7,12 +7,14 @@ namespace XP
     public class XPContainer : MonoBehaviour
     {
         [SerializeField] private List<int> xpNeededPerLevelUp = new();
-        private int currentXP = 0;
-        private int currentLevel = 0;
+        [SerializeField] private int currentXP = 0;
+        [SerializeField] private int currentLevel = 0;
 
         public event Action<int, int> onXPChanged;
         public event Action<int> onLevelUp;
+        public event Action onLevelMax;
         public event Action<int, int, int> init;
+        
 
         public int CurrentXP
         {
@@ -28,8 +30,8 @@ namespace XP
                 {
                     if (currentXP > xpNeededPerLevelUp[currentLevel])
                     {
+                        currentXP -= xpNeededPerLevelUp[currentLevel];
                         currentLevel++;
-                        currentXP = 0;
                         onLevelUp?.Invoke(currentLevel);
                     }
                 }
@@ -38,6 +40,7 @@ namespace XP
                     if (currentXP > xpNeededPerLevelUp[currentLevel])
                     {
                         currentXP = xpNeededPerLevelUp[currentLevel];
+                        onLevelMax?.Invoke();
                     }
                 }
                 onXPChanged?.Invoke(currentXP, xpNeededPerLevelUp[currentLevel]);
@@ -47,6 +50,12 @@ namespace XP
         private void Start()
         {
             init?.Invoke(currentXP, xpNeededPerLevelUp[currentLevel], currentLevel);
+            InvokeRepeating("Test", 1f, 1f);
+        }
+
+        private void Test()
+        {
+            CurrentXP += 1;
         }
     }
 }

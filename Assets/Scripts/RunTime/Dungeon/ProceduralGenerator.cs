@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ProceduralGenerator : MonoBehaviour
+public abstract class ProceduralGenerator : MonoBehaviour
 {
     [Header("Algorithm")]
     [Tooltip("Whether to start generating rooms on Start, or to wait for the Generate Room button to be pressed.")]

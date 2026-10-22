@@ -13,9 +13,15 @@ public class CycleReducer : ProceduralGenerator
     private DungeonWrapper dungeonWrapper;
 
 
-    private void Start()
+    private void OnEnable()
     {
         dungeonWrapper = GetComponent<DungeonWrapper>();
+        dungeonWrapper.onCycleReducer += StartGeneration;
+    }
+
+    private void OnDisable()
+    {
+        dungeonWrapper.onCycleReducer -= StartGeneration;
     }
 
     public void StartGeneration()

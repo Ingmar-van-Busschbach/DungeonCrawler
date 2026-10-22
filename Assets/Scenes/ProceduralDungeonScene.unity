@@ -149,21 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Quests.QuestManager
   startingQuests:
-  - questName: Test
-    questDisplayText: Test {0}/{1}
-    questCurrentTriggerCount: 0
-    questTriggerCountToComplete: 10
-    isComplete: 0
-  - questName: Zombie
-    questDisplayText: Kill {0}/{1} Zombies
-    questCurrentTriggerCount: 0
-    questTriggerCountToComplete: 15
-    isComplete: 0
-  - questName: Boss
-    questDisplayText: Kill {0}/{1} Boss
-    questCurrentTriggerCount: 0
-    questTriggerCountToComplete: 1
-    isComplete: 0
+  - {fileID: 11400000, guid: 89e1797555ada934690eb60413bf8433, type: 2}
+  - {fileID: 11400000, guid: 14b0114303c09564daaee80567787877, type: 2}
   currentQuests: []
 --- !u!4 &30188558
 Transform:
@@ -199,6 +186,7 @@ GameObject:
   - component: {fileID: 96270184}
   - component: {fileID: 96270185}
   - component: {fileID: 96270187}
+  - component: {fileID: 96270188}
   - component: {fileID: 96270186}
   m_Layer: 0
   m_Name: DungeonGenerator
@@ -236,7 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalAutoGenerate: 1
   executionDelayType: 0
-  globalExecutionDelay: 0.0135
+  globalExecutionDelay: 0
   dungeonStatus: 0
 --- !u!114 &96270178
 MonoBehaviour:
@@ -423,6 +411,20 @@ MonoBehaviour:
   autoGenerate: 1
   executionDelay: 0.02
   navMeshSurface: {fileID: 766994032}
+--- !u!114 &96270188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96270174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5a84ca1b8aac743a31d4b7fa34505e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnRoomSelector
+  autoGenerate: 1
+  executionDelay: 0.02
 --- !u!1 &194960357
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,10 +458,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2112672440}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &194960359
 MonoBehaviour:
@@ -481,11 +483,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 1eabc17a8cc6d1446aa3e2be91ddbc93, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -815,7 +817,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: -0.6909982}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 75, y: 50}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &436062457
 MonoBehaviour:
@@ -1032,8 +1034,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 15, y: 135}
-  m_SizeDelta: {x: 300, y: 100}
+  m_AnchoredPosition: {x: 15, y: 85}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &658455317
 MonoBehaviour:
@@ -1354,10 +1356,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 658455316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2111421570
 MonoBehaviour:
@@ -1395,11 +1397,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 1eabc17a8cc6d1446aa3e2be91ddbc93, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -1449,7 +1451,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 15, y: 15}
-  m_SizeDelta: {x: 300, y: 100}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &2112672441
 MonoBehaviour:

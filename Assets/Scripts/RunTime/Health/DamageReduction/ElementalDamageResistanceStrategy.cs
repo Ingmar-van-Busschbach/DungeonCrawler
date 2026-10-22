@@ -1,19 +1,17 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Damage
 {
     public class ElementalDamageResistanceStrategy : DamageReductionStrategy
     {
-        [SerializeField] private List<ElementalDamageResistanceEntry> elementalDamageResistanceEntries;
+        [SerializeField] private Dictionary<EDamageType, float> elementalDamageResistanceEntries;
         public override float ApplyDamageReduction(DamageEntry damage)
         {
-            foreach(ElementalDamageResistanceEntry entry in elementalDamageResistanceEntries)
+            if (elementalDamageResistanceEntries.ContainsKey(damage.damageType))
             {
-                if(damage.damageType == entry.damageType)
-                {
-                    return entry.damageMultiplier;
-                }
+                return elementalDamageResistanceEntries[damage.damageType];
             }
             return 1.0f;
         }

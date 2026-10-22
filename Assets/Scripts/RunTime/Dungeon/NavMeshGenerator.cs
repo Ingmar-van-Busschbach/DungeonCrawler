@@ -7,10 +7,17 @@ public class NavMeshGenerator : ProceduralGenerator
 
     private DungeonWrapper dungeonWrapper;
     
-    private void Start()
+    private void OnEnable()
     {
         dungeonWrapper = GetComponent<DungeonWrapper>();
+        dungeonWrapper.onNavMeshGenerator += StartGeneration;
     }
+
+    private void OnDisable()
+    {
+        dungeonWrapper.onNavMeshGenerator -= StartGeneration;
+    }
+
     public void StartGeneration()
     {
         Debug.Log("Start building NavMesh...");

@@ -10,9 +10,15 @@ public class ReducedDrawer : ProceduralGenerator
 
     private DungeonWrapper dungeonWrapper;
 
-    private void Start()
+    private void OnEnable()
     {
         dungeonWrapper = GetComponent<DungeonWrapper>();
+        dungeonWrapper.onReducedDrawer += StartDrawing;
+    }
+
+    private void OnDisable()
+    {
+        dungeonWrapper.onReducedDrawer += StartDrawing;
     }
 
     public void StartDrawing()

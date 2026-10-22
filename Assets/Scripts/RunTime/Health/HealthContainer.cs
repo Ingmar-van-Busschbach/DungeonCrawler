@@ -47,10 +47,15 @@ namespace Damage
             private set { }
         }
 
-        public void Start()
+        private void Start()
         {
-            currentHealth = MaxHealth;
-            OnHealthChanged?.Invoke(currentHealth, MaxHealth);
+            CurrentHealth = MaxHealth;
+            InvokeRepeating("Test", 1f, 1f);
+        }
+
+        private void Test()
+        {
+            CurrentHealth -= 1;
         }
 
         /// <summary>

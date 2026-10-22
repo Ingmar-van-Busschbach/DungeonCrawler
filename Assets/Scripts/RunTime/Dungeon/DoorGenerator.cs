@@ -24,9 +24,15 @@ public class DoorGenerator : ProceduralGenerator
     private System.Random numberGenerator;
     private DungeonWrapper dungeonWrapper;
 
-    private void Start()
+    private void OnEnable()
     {
         dungeonWrapper = GetComponent<DungeonWrapper>();
+        dungeonWrapper.onDoorGenerator += StartGeneration;
+    }
+
+    private void OnDisable()
+    {
+        dungeonWrapper.onDoorGenerator -= StartGeneration;
     }
 
     public void StartGeneration()

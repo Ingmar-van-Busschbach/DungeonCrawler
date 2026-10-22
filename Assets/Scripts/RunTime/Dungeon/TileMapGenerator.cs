@@ -9,13 +9,19 @@ public class TileMapGenerator : ProceduralGenerator
     private DungeonWrapper dungeonWrapper;
     private RoomGenerator roomGenerator;
 
-    private void Start()
+    private void OnEnable()
     {
         dungeonWrapper = GetComponent<DungeonWrapper>();
         roomGenerator = GetComponent<RoomGenerator>();
+        dungeonWrapper.onTileMapGenerator += StartGeneration;
     }
 
-    public void StartGeneration()
+    private void OnDisable()
+    {
+        dungeonWrapper.onTileMapGenerator -= StartGeneration;
+    }
+
+    private void StartGeneration()
     {
         GenerateTileMap();
     }

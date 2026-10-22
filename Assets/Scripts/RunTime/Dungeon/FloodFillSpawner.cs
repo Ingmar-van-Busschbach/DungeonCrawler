@@ -12,9 +12,15 @@ public class FloodFillSpawner : ProceduralGenerator
     private int currentCount;
     private GameObject parent;
 
-    private void Start()
+    private void OnEnable()
     {
         dungeonWrapper = GetComponent<DungeonWrapper>();
+        dungeonWrapper.onFloodFillSpawner += StartGeneration;
+    }
+
+    private void OnDisable()
+    {
+        dungeonWrapper.onFloodFillSpawner -= StartGeneration;
     }
 
     public void StartGeneration()

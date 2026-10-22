@@ -13,7 +13,7 @@ namespace Quests
         public event Action<Quest> onQuestAdded;
         public event Action<Quest> onQuestRemoved;
 
-        public List<Quest> startingQuests;
+        public List<QuestSO> startingQuests;
         public List<Quest> currentQuests;
 
         private void OnEnable()
@@ -34,16 +34,16 @@ namespace Quests
 
         private void Start()
         {
-            foreach (Quest quest in startingQuests)
+            foreach (QuestSO questSO in startingQuests)
             {
-                AddQuest(quest);
+                AddQuest(questSO.CreateQuest());
             }
             InvokeRepeating("Test", 1f, 1f);
         }
 
         private void Test()
         {
-            EventBus<QuestEvent>.Publish(new QuestEvent("Zombie", 1));
+            EventBus<QuestEvent>.Publish(new QuestEvent("KillZombie", 1));
         }
 
         public void AddQuest(Quest quest)
@@ -56,6 +56,8 @@ namespace Quests
 
         private void OnQuestCompleted(Quest quest)
         {
+            EventBus<QuestEvent>.OnEvent -= quest.AddProgress;
+            quest.onComplete -= OnQuestCompleted;
             currentQuests.Remove(quest);
             onQuestRemoved?.Invoke(quest);
         }

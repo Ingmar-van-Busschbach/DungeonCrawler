@@ -20,21 +20,24 @@ public class DungeonWrapper : MonoBehaviour
     [NonSerialized] public List<RoomWrapper> reducedRooms = new();
     [NonSerialized] public List<DoorWrapper> doors = new();
     [NonSerialized] public List<DoorWrapper> reducedDoors = new();
+    [NonSerialized] public RoomWrapper playerSpawnRoom;
+    [NonSerialized] public RoomWrapper bossSpawnRoom;
     [NonSerialized] public bool[,] tileMap;
     public DungeonStatus dungeonStatus = DungeonStatus.Empty;
 
-    private RoomGenerator roomGenerator;
-    private DoorGenerator doorGenerator;
-    private RoomReducer roomReducer;
-    private CycleReducer cycleReducer;
-    private ReducedDrawer reducedDrawer;
-    private TileMapGenerator tileMapGenerator;
-    private MarchingSquareSpawner marchingSquareSpawner;
-    private FloodFillSpawner floodFillSpawner;
-    private PlayerSpawner playerSpawner;
-    private NavMeshGenerator navMeshGenerator;
+    public event Action onRoomGenerator;
+    public event Action onDoorGenerator;
+    public event Action onRoomReducer;
+    public event Action onCycleReducer;
+    public event Action onReducedDrawer;
+    public event Action onTileMapGenerator;
+    public event Action onMarchingSquareSpawner;
+    public event Action onFloodFillSpawner;
+    public event Action onSpawnRoomSelector;
+    public event Action onPlayerSpawner;
+    public event Action onNavMeshGenerator;
 
-    private HashSet<ProceduralGenerator> proceduralGenerators = new();
+    private ProceduralGenerator[] proceduralGenerators;
 
     private InputSystem_Actions inputActions;
     private InputAction IAContinue;
@@ -44,7 +47,7 @@ public class DungeonWrapper : MonoBehaviour
     private void Awake()
     {
         inputActions = new InputSystem_Actions();
-        CacheComponents();
+        proceduralGenerators = GetComponents<ProceduralGenerator>();
         ApplyGlobalSettings();
         StartCoroutine(CheckGlobalVariablesChanged());
     }
@@ -68,61 +71,6 @@ public class DungeonWrapper : MonoBehaviour
             continueStep = true;
         }
     }
-
-    private void CacheComponents()
-    {
-        if (TryGetComponent(out RoomGenerator roomGenerator))
-        {
-            this.roomGenerator = roomGenerator;
-            proceduralGenerators.Add(roomGenerator);
-        }
-        if (TryGetComponent(out DoorGenerator doorGenerator))
-        {
-            this.doorGenerator = doorGenerator;
-            proceduralGenerators.Add(doorGenerator);
-        }
-        if (TryGetComponent(out RoomReducer roomReducer))
-        {
-            this.roomReducer = roomReducer;
-            proceduralGenerators.Add(roomReducer);
-        }
-        if (TryGetComponent(out CycleReducer cycleReducer))
-        {
-            this.cycleReducer = cycleReducer;
-            proceduralGenerators.Add(cycleReducer);
-        }
-        if (TryGetComponent(out ReducedDrawer reducedDrawer))
-        {
-            this.reducedDrawer = reducedDrawer;
-            proceduralGenerators.Add(reducedDrawer);
-        }
-        if(TryGetComponent(out TileMapGenerator tileMapGenerator))
-        {
-            this.tileMapGenerator = tileMapGenerator;
-            proceduralGenerators.Add(tileMapGenerator);
-        }
-        if(TryGetComponent(out MarchingSquareSpawner marchingSquareSpawner))
-        {
-            this.marchingSquareSpawner = marchingSquareSpawner;
-            proceduralGenerators.Add(marchingSquareSpawner);
-        }
-        if (TryGetComponent(out FloodFillSpawner floodFillSpawner))
-        {
-            this.floodFillSpawner = floodFillSpawner;
-            proceduralGenerators.Add(floodFillSpawner);
-        }
-        if(TryGetComponent(out PlayerSpawner playerSpawner))
-        {
-            this.playerSpawner = playerSpawner;
-            proceduralGenerators.Add(playerSpawner);
-        }
-        if (TryGetComponent(out NavMeshGenerator navMeshGenerator))
-        {
-            this.navMeshGenerator = navMeshGenerator;
-            proceduralGenerators.Add(navMeshGenerator);
-        }
-    }
-
     private void ApplyGlobalSettings()
     {
         foreach(ProceduralGenerator generator in proceduralGenerators)
@@ -164,85 +112,34 @@ public class DungeonWrapper : MonoBehaviour
         switch (dungeonStatus)
         {
             case DungeonStatus.RoomsCompleted:
-                if (doorGenerator != null)
-                {
-                    if (doorGenerator.autoGenerate)
-                    {
-                        doorGenerator.StartGeneration();
-                    }
-                }
+                onDoorGenerator?.Invoke();
                 break;
             case DungeonStatus.DoorsCompleted:
-                if (roomReducer != null)
-                {
-                    if (roomReducer.autoGenerate)
-                    {
-                        roomReducer.StartGeneration();
-                    }
-                }
+                onRoomReducer?.Invoke();
                 break;
             case DungeonStatus.RoomsReduced:
-                if (cycleReducer != null)
-                {
-                    if (cycleReducer.autoGenerate)
-                    {
-                        cycleReducer.StartGeneration();
-                    }
-                }
+                onCycleReducer?.Invoke();
                 break;
             case DungeonStatus.CyclesReduced:
-                if (reducedDrawer != null)
-                {
-                    if (reducedDrawer.autoGenerate)
-                    {
-                        reducedDrawer.StartDrawing();
-                    }
-                }
+                onReducedDrawer?.Invoke();
                 break;
             case DungeonStatus.RoomsDrawn:
-                if (tileMapGenerator != null)
-                {
-                    if (tileMapGenerator.autoGenerate)
-                    {
-                        tileMapGenerator.StartGeneration();
-                    }
-                }
+                onTileMapGenerator?.Invoke();
                 break;
             case DungeonStatus.TileMapGenerated:
-                if (marchingSquareSpawner != null)
-                {
-                    if (marchingSquareSpawner.autoGenerate)
-                    {
-                        marchingSquareSpawner.StartGeneration();
-                    }
-                }
+                onMarchingSquareSpawner?.Invoke();
                 break;
             case DungeonStatus.WallsSpawned:
-                if(floodFillSpawner  != null)
-                {
-                    if (floodFillSpawner.autoGenerate)
-                    {
-                        floodFillSpawner.StartGeneration();
-                    }
-                }
+                onFloodFillSpawner?.Invoke();
                 break;
             case DungeonStatus.FloorSpawned:
-                if (navMeshGenerator != null)
-                {
-                    if (navMeshGenerator.autoGenerate)
-                    {
-                        navMeshGenerator.StartGeneration();
-                    }
-                }
+                onNavMeshGenerator?.Invoke();
                 break;
             case DungeonStatus.NavMeshGenerated:
-                if (playerSpawner != null)
-                {
-                    if (playerSpawner.autoGenerate)
-                    {
-                        playerSpawner.StartSpawning();
-                    }
-                }
+                onSpawnRoomSelector?.Invoke();
+                break;
+            case DungeonStatus.SpawnRoomSelected:
+                onPlayerSpawner?.Invoke();
                 break;
             case DungeonStatus.PlayerSpawned:
                 StartCoroutine(ChangeDungeonStatus(DungeonStatus.DungeonGenerationComplete));
@@ -253,6 +150,6 @@ public class DungeonWrapper : MonoBehaviour
         }
     }
 
-    public enum DungeonStatus { Empty, RoomsCompleted, DoorsCompleted, RoomsReduced, CyclesReduced, RoomsDrawn, TileMapGenerated, WallsSpawned, FloorSpawned, NavMeshGenerated, PlayerSpawned, DungeonGenerationComplete }
+    public enum DungeonStatus { Empty, RoomsCompleted, DoorsCompleted, RoomsReduced, CyclesReduced, RoomsDrawn, TileMapGenerated, WallsSpawned, FloorSpawned, NavMeshGenerated, SpawnRoomSelected, PlayerSpawned, DungeonGenerationComplete }
     public enum ExecutionDelayType { None, ManualBetweenSteps, Automatic }
 }

@@ -22,22 +22,29 @@ public class XPDisplaySubscriber : MonoBehaviour
         {
             xpContainer.onXPChanged -= OnXPChanged;
             xpContainer.onLevelUp -= OnLevelUp;
+            xpContainer.onLevelMax -= OnLevelMax;
+            xpContainer.init -= Init;
         }
     }
 
     private void OnXPChanged(int currentXP, int maxXP)
     {
-        xpBarImage.fillAmount = currentXP / maxXP;
+        xpBarImage.fillAmount = ((float)currentXP / maxXP);
     }
 
     private void OnLevelUp(int currentLevel)
     {
-        levelText.text = currentLevel.ToString();
+        levelText.text = (currentLevel + 1).ToString();
+    }
+
+    private void OnLevelMax()
+    {
+        levelText.text = "Max";
     }
 
     private void Init(int currentXP, int maxXP, int currentLevel)
     {
-        xpBarImage.fillAmount = currentXP / maxXP;
+        xpBarImage.fillAmount = ((float)currentXP / maxXP);
         levelText.text = currentLevel.ToString();
     }
 
@@ -46,5 +53,7 @@ public class XPDisplaySubscriber : MonoBehaviour
         xpContainer = player.GetComponent <XPContainer>();
         xpContainer.onXPChanged += OnXPChanged;
         xpContainer.onLevelUp += OnLevelUp;
+        xpContainer.onLevelMax += OnLevelMax;
+        xpContainer.init += Init;
     }
 }
