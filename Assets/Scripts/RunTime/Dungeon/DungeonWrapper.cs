@@ -36,6 +36,7 @@ public class DungeonWrapper : MonoBehaviour
     public event Action onFloodFillSpawner;
     public event Action onCameraSpawner;
     public event Action onSpawnRoomSelector;
+    public event Action onRoomContentFiller;
     public event Action onPlayerSpawner;
     public event Action onNavMeshGenerator;
     public event Action<float> onCompletionChanged;
@@ -147,6 +148,9 @@ public class DungeonWrapper : MonoBehaviour
                 onSpawnRoomSelector?.Invoke();
                 break;
             case DungeonStatus.SpawnRoomSelected:
+                onRoomContentFiller ?.Invoke();
+                break;
+            case DungeonStatus.RoomsFilledWithContent:
                 onPlayerSpawner?.Invoke();
                 break;
             case DungeonStatus.PlayerSpawned:
@@ -157,6 +161,6 @@ public class DungeonWrapper : MonoBehaviour
         }
     }
 
-    public enum DungeonStatus { Empty = 0, RoomsCompleted, DoorsCompleted, RoomsReduced, CyclesReduced, RoomsDrawn, TileMapGenerated, WallsSpawned, FloorSpawned, NavMeshGenerated, CamerasSpawned, SpawnRoomSelected, PlayerSpawned, DungeonGenerationComplete}
+    public enum DungeonStatus { Empty = 0, RoomsCompleted, DoorsCompleted, RoomsReduced, CyclesReduced, RoomsDrawn, TileMapGenerated, WallsSpawned, FloorSpawned, NavMeshGenerated, CamerasSpawned, SpawnRoomSelected, RoomsFilledWithContent, PlayerSpawned, DungeonGenerationComplete}
     public enum ExecutionDelayType { None, ManualBetweenSteps, Automatic }
 }

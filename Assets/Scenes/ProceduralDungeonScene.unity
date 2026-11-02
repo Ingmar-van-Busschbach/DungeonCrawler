@@ -190,6 +190,7 @@ GameObject:
   - component: {fileID: 96270188}
   - component: {fileID: 96270186}
   - component: {fileID: 96270189}
+  - component: {fileID: 96270191}
   m_Layer: 0
   m_Name: DungeonGenerator
   m_TagString: Generator
@@ -459,6 +460,26 @@ MonoBehaviour:
   cinemachineCamera: {fileID: 3153563414443037076, guid: 5e22ef0b9b9b0f349b46a56eaac45b85, type: 3}
   parent: {fileID: 1509368634}
   cameras: []
+--- !u!114 &96270191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96270174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1186e9a4f9282d4aa3c1cf788a313bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomContentFiller
+  autoGenerate: 1
+  executionDelay: 0.02
+  seed: 90
+  lootChancePercent: 25
+  roomFillAmount: 10
+  radius: 3.5
+  lootPrefab: {fileID: 6200720779111275133, guid: 1083f87f08232f541942f4a22a00127e, type: 3}
+  enemyPrefab: {fileID: 2953940421294994260, guid: 513e95e615686fe498b17bf2e24a041a, type: 3}
 --- !u!1 &194960357
 GameObject:
   m_ObjectHideFlags: 0
