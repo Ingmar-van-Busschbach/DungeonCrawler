@@ -4,22 +4,23 @@ using UnityEngine;
 public class RoomContentFiller : ProceduralGenerator
 {
     private DungeonWrapper dungeonWrapper;
-
+    private PlayerSpawner spawner;
     [Range(0, 100)][SerializeField] private int seed = 90;
     [Range(0, 100)][SerializeField] private int lootChancePercent = 25;
-    [Range(0, 10)][SerializeField] private int roomFillAmount;
+    [Range(0, 3)][SerializeField] private int roomMinFillAmount;
+    [Range(0, 10)][SerializeField] private int roomMaxFillAmount;
     [Range(0, 10)][SerializeField] private float radius = 4;
 
 
     [SerializeField] private GameObject lootPrefab;
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private EnemyGridMovement enemyPrefab;
 
     private System.Random numberGenerator;
 
     private void OnEnable()
     {
         dungeonWrapper = GetComponent<DungeonWrapper>();
-
+        spawner = GetComponent<PlayerSpawner>();
         dungeonWrapper.onSpawnRoomSelector += FillRoomsWithContent;
     }
 
@@ -42,10 +43,10 @@ public class RoomContentFiller : ProceduralGenerator
                 continue;
             }
             List<Vector2> points = PoissonDiscSampling.GeneratePoints(radius, dungeonWrapper.reducedRooms[i].room.size - new Vector2(2 * radius, 2 * radius), seed, 20);
-            int randomFillAmount = numberGenerator.Next(0, roomFillAmount);
+            int randomFillAmount = numberGenerator.Next(Mathf.Min(roomMinFillAmount, points.Count), Mathf.Min(roomMaxFillAmount, points.Count));
             Vector2 position = dungeonWrapper.reducedRooms[i].room.position;
             Vector3 roomLocation = new Vector3(position.x + radius, 0, position.y + radius);
-            for (int j = 0; j < Mathf.Min(randomFillAmount, points.Count); j++)
+            for (int j = 0; j < randomFillAmount; j++)
             {
                 int randomLootChance = numberGenerator.Next(0, 100);
                 if (randomLootChance <= lootChancePercent)
@@ -54,7 +55,11 @@ public class RoomContentFiller : ProceduralGenerator
                 }
                 else
                 {
-                    Instantiate(enemyPrefab, new Vector3(points[j].x, 0, points[j].y) + roomLocation, Quaternion.identity);
+                    EnemyGridMovement enemy = Instantiate(enemyPrefab, new Vector3(points[j].x, 0, points[j].y) + roomLocation, Quaternion.identity);
+                    enemy.playerSpawner = spawner;
+                    SingletonEnemyTurnManager.Instance.enemyTurnManager.enemies.Add(enemy);
+                    enemy.name = "Enemy " + SingletonEnemyTurnManager.Instance.enemyTurnManager.enemies.Count;
+                    spawner.onPlayerSpawned += enemy.OnPlayerSpawned;
                 }
             }
         }

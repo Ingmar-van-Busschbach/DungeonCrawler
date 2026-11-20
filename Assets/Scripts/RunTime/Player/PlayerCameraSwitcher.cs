@@ -5,7 +5,7 @@ public class PlayerCameraSwitcher : MonoBehaviour
 {
     private CameraSpawner cameraSpawner;
     private DungeonWrapper dungeonWrapper;
-    int currentCameraIndex = -1;
+    public int currentCameraIndex = -1;
     void Start()
     {
         GameObject generator = GameObject.FindGameObjectWithTag("Generator");
@@ -27,18 +27,12 @@ public class PlayerCameraSwitcher : MonoBehaviour
         }
         if (index >= 0 && index != currentCameraIndex)
         {
-            currentCameraIndex = index;
-            for (int i = 0; i < cameraSpawner.cameras.Count; i++)
+            if(currentCameraIndex >= 0)
             {
-                if(i == index)
-                {
-                    cameraSpawner.cameras[i].Priority = 1;
-                }
-                else
-                {
-                    cameraSpawner.cameras[i].Priority = 0;
-                }
+                cameraSpawner.cameras[currentCameraIndex].Priority = 0;
             }
+            currentCameraIndex = index;
+            cameraSpawner.cameras[currentCameraIndex].Priority = 1;
         }
     }
 }

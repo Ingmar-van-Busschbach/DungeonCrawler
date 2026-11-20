@@ -50,12 +50,6 @@ namespace XP
         private void Start()
         {
             init?.Invoke(currentXP, xpNeededPerLevelUp[currentLevel], currentLevel);
-            InvokeRepeating("Test", 1f, 1f);
-        }
-
-        private void Test()
-        {
-            CurrentXP += 1;
         }
     }
 }

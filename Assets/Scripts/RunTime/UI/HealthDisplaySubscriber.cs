@@ -29,9 +29,9 @@ public class HealthDisplaySubscriber : MonoBehaviour
         healthBarImage.color = healthColorGradient.Evaluate(currentHealth / maxHealth);
     }
 
-    private void OnPlayerSpawned(GameObject player)
+    private void OnPlayerSpawned(PlayerGridMovement player)
     {
-        healthContainer = player.GetComponent<HealthContainer>();
+        healthContainer = player.gameObject.GetComponent<HealthContainer>();
         healthContainer.OnHealthChanged += OnHealthChanged;
     }
 }

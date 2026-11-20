@@ -48,9 +48,9 @@ public class XPDisplaySubscriber : MonoBehaviour
         levelText.text = (currentLevel + 1).ToString();
     }
 
-    private void OnPlayerSpawned(GameObject player)
+    private void OnPlayerSpawned(PlayerGridMovement player)
     {
-        xpContainer = player.GetComponent <XPContainer>();
+        xpContainer = player.gameObject.GetComponent <XPContainer>();
         xpContainer.onXPChanged += OnXPChanged;
         xpContainer.onLevelUp += OnLevelUp;
         xpContainer.onLevelMax += OnLevelMax;

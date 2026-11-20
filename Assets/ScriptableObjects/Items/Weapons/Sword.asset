@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa6cff5ee167854e997a60ed38b96a0, type: 3}
+  m_Name: Sword
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponItemData
+  id: sword
+  itemName: Sword
+  itemIcon: {fileID: -1083979955, guid: 593d9f17fa4114010bab674570216743, type: 3}
+  damageSettings:
+    baseDamageMultiplier:
+      value: 1
+      buffs: []
+    elementalDamage:
+    - damage:
+        value: 0.7
+        buffs: []
+      damageType: 2
+    - damage:
+        value: 0.1
+        buffs: []
+      damageType: 1
+    - damage:
+        value: 0.4
+        buffs: []
+      damageType: 3
+    criticalChance:
+      value: 30
+      buffs: []
+    criticalDamage:
+      value: 1.2
+      buffs: []
+    statusChance:
+      value: 30
+      buffs: []
+    statusDamage:
+      value: 1
+      buffs: []
+    statusDuration:
+      value: 5
+      buffs: []

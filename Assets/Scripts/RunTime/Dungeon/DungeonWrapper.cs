@@ -26,7 +26,6 @@ public class DungeonWrapper : MonoBehaviour
     [NonSerialized] public bool[,] tileMap;
     public DungeonStatus dungeonStatus = DungeonStatus.Empty;
 
-    public event Action onRoomGenerator;
     public event Action onDoorGenerator;
     public event Action onRoomReducer;
     public event Action onCycleReducer;

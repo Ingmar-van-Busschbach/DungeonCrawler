@@ -12,7 +12,11 @@ GameObject:
   - component: {fileID: 1767515575687709786}
   - component: {fileID: 6701489915578397142}
   - component: {fileID: 6385536600683499561}
-  m_Layer: 0
+  - component: {fileID: 4133668927199985625}
+  - component: {fileID: 3944917693365725693}
+  - component: {fileID: 3946947163283250003}
+  - component: {fileID: 3395107732772568016}
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,3 +116,100 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!195 &4133668927199985625
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2953940421294994260}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &3944917693365725693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2953940421294994260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe6b198691895942ae32911200e9d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyGridMovement
+  playerSpawner: {fileID: 0}
+  minimumDistanceToMove: 2
+  randomMoveChance: 0.5
+--- !u!114 &3946947163283250003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2953940421294994260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8fd048e4bdd31f47b3f0cae38fea8ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyRoomIdentifier
+  roomIndex: -1
+--- !u!114 &3395107732772568016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2953940421294994260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f02243eded4480f419e598c126da96ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
+  weaponSettings:
+    baseDamageMultiplier:
+      value: 1
+      buffs: []
+    elementalDamage:
+    - damage:
+        value: 1
+        buffs: []
+      damageType: 1
+    - damage:
+        value: 1
+        buffs: []
+      damageType: 2
+    - damage:
+        value: 1
+        buffs: []
+      damageType: 3
+    criticalChance:
+      value: 1
+      buffs: []
+    criticalDamage:
+      value: 1
+      buffs: []
+    statusChance:
+      value: 1
+      buffs: []
+    statusDamage:
+      value: 1
+      buffs: []
+    statusDuration:
+      value: 1
+      buffs: []
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 8

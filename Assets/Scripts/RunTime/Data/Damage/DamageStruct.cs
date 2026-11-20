@@ -16,7 +16,15 @@ namespace Damage
         public BuffableFloat statusDamage;
         public BuffableFloat statusDuration;
 
-
+        public float BaseDamage()
+        {
+            float baseDamage = 0;
+            foreach (DamageEntry damageEntry in elementalDamage)
+            {
+                baseDamage += damageEntry.damage.Value * baseDamageMultiplier.Value;
+            }
+            return baseDamage;
+        }
         public DamageInstance CriticalDamage()
         {
             float criticalTier = Mathf.Floor(criticalChance.Value / 100);

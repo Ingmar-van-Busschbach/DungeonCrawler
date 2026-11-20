@@ -50,12 +50,6 @@ namespace Damage
         private void Start()
         {
             CurrentHealth = MaxHealth;
-            InvokeRepeating("Test", 1f, 1f);
-        }
-
-        private void Test()
-        {
-            CurrentHealth -= 1;
         }
 
         /// <summary>

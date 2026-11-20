@@ -38,13 +38,12 @@ namespace Quests
             {
                 AddQuest(questSO.CreateQuest());
             }
-            InvokeRepeating("Test", 1f, 1f);
         }
 
-        private void Test()
-        {
-            EventBus<QuestEvent>.Publish(new QuestEvent("KillZombie", 1));
-        }
+        //private void Test()
+        //{
+        //    EventBus<QuestEvent>.Publish(new QuestEvent("KillZombie", 1));
+        //}
 
         public void AddQuest(Quest quest)
         {
